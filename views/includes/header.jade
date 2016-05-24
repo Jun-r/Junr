@@ -1,0 +1,11 @@
+.head
+    #logo-bg.logo-bg
+        canvas#logo-canvas(style='', width='160', height='320')
+        canvas#shadow-canvas(style='display: none;')
+    .logo
+        h1
+            a(href='/', rel='nofollow') 俊峰
+    ul.nav.clearfix
+        each item in navigate
+            li
+                a(href='#{item.url}', rel='nofollow', title='#{item.name}') #{item.name}

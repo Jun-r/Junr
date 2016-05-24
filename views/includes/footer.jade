@@ -1,0 +1,14 @@
+.foot
+    ul.foot-nav
+        li
+            span 友情连接
+            | ：
+        each item in friendlylinks
+            li
+                a(href='/#{item.Link}',rel='bookmark') #{item.name}
+    p.copyright
+        | © 2016 
+        a(href='/')
+            span Junr.me
+        | . Powered by 
+        a(href='Junr.me', target='_blank', rel='nofollow') 0.0.1.
