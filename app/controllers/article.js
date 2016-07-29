@@ -2,6 +2,7 @@ var config= require("../../config");
 var Article = require("../models/article");
 var cate = require("../controllers/category");
 var nav = require("../controllers/navigate");
+var Page = require("../models/page");
 var link = require("../controllers/friendlylinks");
 var Category = require("../models/category");
 var Navigate = require("../models/navigate");
@@ -11,7 +12,7 @@ exports.list = function(req, res) {
     var pageSize = 5;//每页显示条数
     var page = req.params.num-1 || 0 ;
     Article.find().count().exec(function(err ,sum){
-        Article.find().limit(pageSize).skip(pageSize*page).sort({_id : 'asc'}).exec(function(err,_article){
+        Article.find().limit(pageSize).skip(pageSize*page).sort({_id :-1}).exec(function(err,_article){
             Category.find({}, function (err,_category) {
                 res.render('admin/articleList', {
                     title: '文章列表',
@@ -75,9 +76,15 @@ var getCategoryIdList= function(aliasId,callbark) {
         return callbark(_articleList)
     });
 }
-//获取指定文章
+//获取指定分类文章
 var getAliasArticle= function(alias,callbark) {
     Article.findOne({"alias":alias}).exec(function (err,_article){
+        return callbark(_article)
+    });
+}
+//获取指定文章
+var getAliasPage= function(url,callbark) {
+    Page.findOne({"url":url}).exec(function (err,_article){
         return callbark(_article)
     });
 }
@@ -132,7 +139,7 @@ exports.getList= function(req,res) {
                 }
             }
             res.render('article',{
-                title: "俊峰博客-全部文章",
+                title: "全部文章-"+config.name,
                 keywords:config.keywords,
                 description:config.description,
                 dirPath:config.dirname,
@@ -185,9 +192,15 @@ exports.getCategoryList= function(req,res,next) {
                 categories=results[1],
                 cateOnes=results[2],
                 link=results[3];
+            for (var key in categories) {
+                getCategoryIdList(categories[key]['_id'],function(articleList){
+                    categories[key].sum = articleList.length;
+                })
+            }
            getCategoryIdList(cateOnes.catId,function(articleList){
                 res.render('article-list',{
                     title: cateOnes['name']+"-"+config.name,
+                    cateOnes:cateOnes['name'],
                     Alias:cateOnes['alias'],
                     keywords:config.keywords,
                     description:config.description,
@@ -205,6 +218,7 @@ exports.getCategoryList= function(req,res,next) {
 //前台内容详情
 exports.getShow= function(req,res) {
     var _Alias = req.params.alias;
+    console.log(req.params)
     async.parallel([
         function(cb){
             nav.getAllnav(function(err,navigate){
@@ -238,25 +252,79 @@ exports.getShow= function(req,res) {
             link=results[2];
         getAliasArticle(_Alias,function(_articleShow){
             var CateName;
-            for(var i =0;i<categories.length;i++){
-                if(categories[i]['_id'] == _articleShow.categoryId){
-                    CateName= categories[i]['CateName']
-                    break;
+            if(_articleShow) {
+                for (var i = 0; i < categories.length; i++) {
+                    if (categories[i]['_id'] == _articleShow.categoryId) {
+                        CateName = categories[i]['CateName']
+                        break;
+                    }
                 }
+                res.render('article-detail', {
+                    title: _articleShow.title + "-" + config.name,
+                    keywords: config.keywords,
+                    hostUrl:config.host,
+                    description: config.description,
+                    categoryName: CateName,
+                    dirPath: config.dirname,
+                    articleShow: _articleShow,
+                    categorys: categories,
+                    navigate: navigate,
+                    friendlylinks: link
+                });
+            }else{
+                res.redirect("/error");
             }
-            res.render('article-detail',{
-                title: _articleShow.title+"-"+config.name,
-                keywords:config.keywords,
-                description:config.description,
-                categoryName:CateName,
-                dirPath:config.dirname,
-                articleShow:_articleShow,
-                categorys:categories,
-                navigate:navigate,
-                friendlylinks:link
-            });
         })
 
+
+    })
+}
+//单页详情
+exports.getPage= function(req,res) {
+    var _url = req.params.url;
+    console.log(_url);
+    async.parallel([
+        function(cb){
+            nav.getAllnav(function(err,navigate){
+                if (err) {
+                    cb(err);
+                } else {
+                    cb(null, navigate);
+                }
+            })
+        },
+        function(cb){
+            cate.getCategoryAll(function (err,categories) {
+                if (err) {
+                    cb(err);
+                } else {
+                    cb(null, categories);
+                }
+            });
+        },function(cb){
+            link.getLinkAll(function(err,friendLink){
+                if (err) {
+                    cb(err);
+                } else {
+                    cb(null, friendLink);
+                }
+            })
+        }],function(err,results){
+        var navigate=results[0],
+            categories=results[1],
+            link=results[2];
+        getAliasPage(_url,function(_page) {
+            res.render('page', {
+                title: _page.name + "-" + config.name,
+                keywords: config.keywords,
+                description: config.description,
+                dirPath: config.dirname,
+                categorys:categories,
+                page: _page,
+                navigate: navigate,
+                friendlylinks: link
+            });
+        });
     })
 }
 //提交与更新

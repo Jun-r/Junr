@@ -9,32 +9,32 @@ html
         div.pos-rlt.p-md
             span 首页
              em >
-             span 添加单页
+             span 编辑单页
         div.p-md.m-top
             div.panel.panel-default
                 div.panel-body
                    div.tab_t
-                      span.a.active 单页列表
+                      span.a.active 编辑单页
                 div.pane-body.atricle-form
                     form(action="/admin/pageList/save",method="post")
-                        input(type="hidden",name="_id",value="#{article._id}")
+                        input(type="hidden",name="_id",value="#{page._id}")
                         div.form-group.m-h-n.clearfix
                             label.control-label 单页名称：
                             div.col-sm-6
-                                input.form-control(type="text",name="title",value='#{article.name}')
+                                input.form-control(type="text",name="name" value="#{page.name}")
                         div.form-group.m-h-n.clearfix
-                            label.control-label 文章摘要：
+                            label.control-label 单页介绍：
                             div.col-sm-6
-                                textarea.form-control(rows="5",name="remark") #{article.remark}
+                                textarea.form-control(rows="5",name="remark") #{page.remark}
                         div.form-group.m-h-n.clearfix
                             label.control-label 单页连接：
                             div.col-sm-5
-                                input.form-control(name="url",value='#{article.url}')
+                                input.form-control(type="text",name="url" value="#{page.url}")
                         div.form-group.m-h-n.clearfix
-                            label.control-label 内容：
+                            label.control-label 单页内容：
                             div.col-sm-11
                                 div#editormd(style="margin:0")
-                                    textarea.form-control(style="display:none;") #{article.markdownContent}
+                                   textarea.form-control(style="display:none;") #{page.markdownContent}
                         div.form-group.m-h-n.clearfix
                             label.control-label
                             div.col-sm-6
@@ -52,6 +52,15 @@ html
                     height: 640,
                     syncScrolling: "single",
                     path: "/editor/lib/",
-                    saveHTMLToTextarea: true
+                    saveHTMLToTextarea: true,
+                    //dialogLockScreen : false,   // 设置弹出层对话框不锁屏，全局通用，默认为 true
+                    //dialogShowMask : false,     // 设置弹出层对话框显示透明遮罩层，全局通用，默认为 true
+                    //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为 true
+                    //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为 0.1
+                    //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为 #fff
+                    imageUpload: true,
+                    imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                    imageUploadURL: "/upload"
                 });
             });
+

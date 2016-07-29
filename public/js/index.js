@@ -38,4 +38,18 @@ $(document).ready(function () {
 
         ]
     });
+    /* PC端适配方案 */
+    function isPC(){
+        var userAgentInfo = navigator.userAgent;
+        var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+        var flag = true;
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+        }
+        return flag;
+    }
+    var indexVideo=$("#index-video");
+    if(!isPC()){
+        indexVideo.trigger('pause').remove();
+    }
 });

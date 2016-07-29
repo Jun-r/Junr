@@ -12,6 +12,19 @@ html {
   color: #000;
 }
 
+body, button, input, select, textarea {
+  margin: 0;
+  padding: 0;
+  line-height: 2.286;
+  /*32px*/
+  font-family: 'Roboto Slab',serif;
+  font-size: 14px;
+  /* 字体为 16 px 大小 */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  vertical-align: baseline;
+}
+
 body {
   height: 100%;
   background: #fff;
@@ -19,7 +32,6 @@ body {
   margin: 0;
   padding: 0;
   line-height: 2.286;
-  font-family: "Microsoft YaHei", Helvetica, "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", "Monaco", monospace, Tahoma, STXihei, "鍗庢枃缁嗛粦", STHeiti, "Helvetica Neue", "Droid Sans", "wenquanyi micro hei", FreeSans, Arimo, Arial, SimSun, Heiti, "榛戜綋", sans-serif;
   font-size: 14px;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
@@ -180,7 +192,7 @@ object, embed {
   width: 160px;
   height: 80px;
   position: absolute;
-  top: 60px;
+  top: 55px;
   left: 70px;
   margin-left: -4.8em;
   z-index: 100;
@@ -188,7 +200,7 @@ object, embed {
 }
 
 .index .logo {
-  width: 78px;
+  width: 75px;
   height: 100px;
   top: 170px;
   left: 50%;
@@ -211,7 +223,6 @@ object, embed {
 
 .nav {
   height: auto;
-  margin-left: 0;
   position: absolute;
   top: 40px;
   overflow: hidden;
@@ -224,7 +235,6 @@ object, embed {
 
 .index .nav {
   height: auto;
-  margin-left: 0;
   position: absolute;
   top: 360px;
   overflow: hidden;
@@ -239,7 +249,7 @@ object, embed {
   display: block;
   text-align: center;
   overflow: hidden;
-  margin-right: 1.5em;
+  margin: 0 0.68em;
   height: auto;
 }
 .nav a {
@@ -289,10 +299,16 @@ object, embed {
   font-size: 0.875em;
   color: #fff;
   margin: 0 auto;
+  z-index: 9;
 }
 
 .index .foot {
   display: none;
+}
+
+.nolist {
+  line-height: 80px;
+  text-align: center;
 }
 
 .entry {
@@ -303,11 +319,15 @@ object, embed {
 }
 .entry .entry-title {
   margin-bottom: 1.714285714rem;
+  font-family: "Microsoft YaHei";
   font-size: 1.871429rem;
   line-height: 1.2;
 }
-.entry .entry-main {
-  margin: 0 0 1.714285714rem;
+
+.inide-video {
+  position: absolute;
+  top: 50px;
+  right: 50px;
 }
 
 .entry .entry-right {
@@ -333,6 +353,8 @@ object, embed {
 }
 .entry .entry-right .entry-list-archive-page li a {
   text-decoration: underline;
+  display: block;
+  padding-right: 80px;
 }
 .entry .entry-right .entry-list-archive-page li:after {
   content: "\2014";
@@ -423,6 +445,8 @@ object, embed {
   color: #c8c8c8;
   vertical-align: middle;
   padding-top: 4px;
+  position: relative;
+  top: -32px;
 }
 .entry .entry-list-archive-page li {
   margin: 0;
@@ -436,13 +460,17 @@ object, embed {
   margin: 0 0 .714285714rem 0;
   border-bottom: none;
   padding: 0;
-  border-bottom: 1px double #f0f0f0;
+}
+.entry .entry-list-archive li p {
+  color: #968b8b;
 }
 .entry .entry-list-archive li a {
   text-decoration: none;
-}
-.entry .entry-list-archive li:hover {
-  border-bottom: 1px double #c8c8c8;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 73px;
 }
 .entry .entry-list h5 {
   font-size: 1.2em;
@@ -496,6 +524,7 @@ object, embed {
   background: #000;
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 .banner-cover {
@@ -921,7 +950,6 @@ input.custom-btn:hover {
   padding-left: 15px;
   font-size: 14px;
   line-height: 32px;
-  height: 32px;
   margin-bottom: 14px;
   border-left: 1px solid #e0e0e0;
 }
@@ -1060,7 +1088,7 @@ input.custom-btn:hover {
 *************************/
 @media only screen and (min-width: 1024px) and (max-width: 1280px) {
   .index .nav li {
-    margin-right: .2em;
+    margin: 2em;
   }
 }
 /*************************
@@ -1145,22 +1173,40 @@ input.custom-btn:hover {
 @media only screen and (min-width: 320px) and (max-width: 767px) {
   .head {
     position: relative;
-    width: 92%;
+    width: 100%;
     min-width: 92%;
-    margin: 0 4%;
-    overflow: auto;
-    height: auto;
+    overflow: hidden;
+    margin: 0;
+    height: 225px;
     padding: 0 0;
+  }
+
+  .bdshare {
+    margin-top: 0;
+    visibility: hidden;
+  }
+
+  .entry .entry-title {
+    font-size: 1.271429rem;
+    line-height: 1.2;
+  }
+
+  .logo-bg {
+    left: 50%;
+    margin-left: -160px;
+  }
+
+  #J-wrapper.index {
+    display: none;
   }
 
   .index .head {
     position: absolute;
-    top: 0px;
+    top: 50%;
     left: 0px;
     width: 100%;
-    margin-left: 0;
+    margin-top: -45%;
     min-width: 100%;
-    float: left;
     height: 360px;
     z-index: 100;
   }
@@ -1173,16 +1219,21 @@ input.custom-btn:hover {
 
   .logo {
     position: relative;
-    float: left;
-    margin: 0em 0 1em;
+    left: 50%;
+    top: 50%;
+    margin: -53px 0 70px -80px;
     z-index: 100;
+  }
+
+  .index .logo-bg {
+    margin-top: 0;
   }
 
   .index .logo {
     position: absolute;
     top: 3em;
-    left: 3em;
-    margin: 0 0;
+    left: 50%;
+    margin: 20px 0 0 -40px;
   }
   .index .logo h2 a {
     color: #fff;
@@ -1192,19 +1243,24 @@ input.custom-btn:hover {
   }
 
   .nav {
-    float: left;
-    width: 90%;
-    margin-left: 0;
+    width: 251px;
+    margin: 0 auto;
     position: relative;
     margin-top: 1em;
     z-index: 100;
     padding-left: 0;
   }
 
+  .nav li {
+    margin: 0 .28em;
+  }
+
   .index .nav {
-    margin-top: 1em;
-    left: 1em;
+    right: 0;
+    margin-top: 11em;
+    left: 0;
     top: 5em;
+    transform: translateX(0);
   }
 
   .contain {
@@ -1228,23 +1284,15 @@ input.custom-btn:hover {
     margin-left: 3em;
     width: 100%;
     max-width: 580px;
-    margin: 4em 0;
+    margin: 1em 0 0 0;
   }
   .entry .entry-right {
     display: none;
   }
 
   .index .nav li {
-    height: 2em;
-  }
-  .index .nav a:before {
-    content: "";
-    margin-bottom: .5em;
-    width: 2em;
-    display: block;
-    height: 2em;
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.3);
+    height: auto;
+    margin: 0 0.28em;
   }
 
   .nav .sp {
@@ -1273,8 +1321,18 @@ input.custom-btn:hover {
     left: 1em;
   }
 
-  .foot .copyright {
+  .foot {
+    position: relative;
+  }
+
+  .foot .foot-nav {
     display: none;
+  }
+
+  .foot .copyright {
+    float: none;
+    text-align: center;
+    margin: 0 auto;
   }
 }
 /* Make clicks pass-through */

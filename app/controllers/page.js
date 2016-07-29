@@ -37,28 +37,26 @@ exports.updata = function(req, res) {
        Page.findById({"_id":_article.id}, function (err,_article) {
             res.render('admin/pageUpdata', {
                 title: '编辑单页',
-                article:_article
+                page:_article
             })
         });
 }
 //文章提交与更新
 exports.save= function(req,res) {
     var _pageA = req.body;
-    console.log(_pageA)
     var _page={
         name:_pageA.name,
         url: _pageA.url,
         remark:_pageA.remark,
-        markdownContent:_pageA['editormd-markdown-doc'],
+        'markdownContent':_pageA['editormd-markdown-doc'],
     }
-
     if(_pageA._id){
         var id = _pageA._id;
-        Page.update({_id:id},_pageA,function (err,_page) {
+        Page.update({_id:id},_page,function (err,_page) {
             res.redirect("/admin/pageList");
         });
     }else{
-        Page.create(_pageA, function (err,_page) {
+        Page.create(_page, function (err,_page) {
             res.redirect("/admin/pageList");
         });
     }

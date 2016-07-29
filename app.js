@@ -41,6 +41,7 @@ app.listen(config.port);
 console.log("服务器已经启动,端口是"+config.port);
 
 require('./routes/index')(app)
+require('./app/util/file')(app)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

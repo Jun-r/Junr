@@ -9,8 +9,10 @@ block content
                     ul.entry-list-archive
                         each item in articleList
                             li.fn-clear
-                                a(href='/#{item.AliasName}/#{item.alias}') #{item.title}
-                                time #{moment(item.publish).format('YYYY-MM-DD')}
+                                h5
+                                    a(href='/#{item.AliasName}/#{item.alias}') #{item.title}
+                                    time #{moment(item.publish).format('YYYY-MM-DD')}
+                                p #{item.remark}
                 .entry-right
                     ul.entry-right-list
                         li.date 文章分类

@@ -3,7 +3,7 @@ var laypage = require('laypage');
 var cateOther=[]
 //分类列表
 exports.list = function(req, res) {
-    var pageSize = 5;//每页显示条数
+    var pageSize = 15;//每页显示条数
     var page = req.params.num-1 || 0 ;
     Category.find().count().exec(function(err ,sum){
         Category.find().limit(pageSize).skip(pageSize*page).sort({_id : 'asc'}).exec(function(err,category){
@@ -46,6 +46,7 @@ exports.save= function(req,res) {
 }
 //获取所有分类
 exports.getCategoryAll= function(callback) {
+
     Category.find().sort({sort:1}).exec(function (err,categories) {
         if (err) {
             return callback(err);

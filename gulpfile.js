@@ -82,6 +82,16 @@ gulp.task('css', function() {
         }))
         .pipe(header(banner))
         .pipe(gulp.dest("./public/dist/css"));
+    gulp.src(['./public/css/editormd.css'])
+        .pipe(minifyCss({
+            advanced: true
+        }))
+        .pipe(header(banner))
+        .pipe(gulp.dest("./public/dist/css"));
 });
-gulp.task('default');
-//gulp.task('default', ['watch']);
+gulp.task('watch', function() {
+    gulp.watch(["./public/sass/*.scss"], ['css']);
+    gulp.watch(["./public/dist/css/*.js"], ['js']);
+});
+//gulp.task('default');
+gulp.task('default', ['watch']);

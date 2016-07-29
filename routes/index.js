@@ -56,8 +56,8 @@ module.exports = function(app) {
     //文章列表页
     app.get(['/blog'],Article.getList);
     app.get(['/:Alias'],Article.getCategoryList);
+    //单页
+    app.get('/page/:url',Article.getPage);
     //文章详情页
     app.get('/:Alias/:alias',Article.getShow);
-
-
 }

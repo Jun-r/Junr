@@ -6,8 +6,8 @@ module.exports = function (app) {
         //生成multiparty对象，并配置上传目标路径
         var filePath = './public/upload/file/';
         var imgPath = './public/upload/img/';
-        var fileUrl = "../upload/file/";
-        var imgUrl = "../upload/img/";
+        var fileUrl = "/upload/file/";
+        var imgUrl = "/upload/img/";
         var form = new multiparty.Form({uploadDir: filePath});
         //上传完成后处理
         form.parse(req, function(err, fields, files) {
@@ -15,18 +15,16 @@ module.exports = function (app) {
             var filesTmp = JSON.stringify(files, null, 2);
             if (err) {
                 console.log('parse error: ' + err);
-                res.write(JSON.stringify({
-                    error:1,
+                res.send({
+                    success:0,
                     message:"上传失败"
-                }));
-                res.end();
+                });
             } else {
                 console.log('parse files: ' + filesTmp);
-                var inputFile = files.imgFile[0];
-                var uploadedPath = inputFile.path;
-                var index = inputFile.originalFilename.lastIndexOf(".");
-                var ext = inputFile.originalFilename.substring(index);
-
+                var inputFile = files['editormd-image-file'];
+                var uploadedPath = inputFile[0].path;
+                var index = inputFile[0].originalFilename.lastIndexOf(".");
+                var ext = inputFile[0].originalFilename.substring(index);
                 var date = new Date();
                 var year = date.getFullYear();
                 var month = date.getMonth()+1;
@@ -38,7 +36,8 @@ module.exports = function (app) {
 
                 var dstPath = filePath;
                 var url = fileUrl;
-                if(".jpg.jpeg.gif.png".indexOf(ext)>-1){
+                var picType=".jpg.jpeg.gif.png";
+                if(picType.indexOf(ext)!=-1){
                     dstPath = imgPath;
                     url = imgUrl;
                 }
@@ -52,13 +51,12 @@ module.exports = function (app) {
                         console.log('rename ok');
                     }
                 });
-                res.write(JSON.stringify({
-                    error:0,
+                res.send({
+                    success:1,
                     url:url+fileName,
-                    message:"成功"
-                }));
+                    message:"上传成功"
+                });
                 //{"error":0,"message":".....","url":"/img/1111.gif"}
-                res.end();
             }
         });
     });

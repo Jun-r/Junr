@@ -1,0 +1,24 @@
+{
+  "name": "junr",
+  "description": "junr css js",
+  "main": "gulpfile.js",
+  "authors": [
+    "junr"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "sss"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "editor.md": "^1.5.0"
+  }
+}
